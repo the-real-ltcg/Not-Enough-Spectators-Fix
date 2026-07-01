@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Cross-version (old client) join failures
+    url: https://github.com/the-real-ltcg/Not-Enough-Spectators-Fix/wiki/Cross-Version-Support
+    about: Older clients failing at "Failed to load registries" is a known upstream ViaBackwards limitation for 26.2. Read this first.

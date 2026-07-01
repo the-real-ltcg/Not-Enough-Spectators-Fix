@@ -2,7 +2,7 @@ package cheeezer.notenoughspectators.event;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.protocol.Packet;
 
 public interface PacketCallback {
     Event<PacketCallback> EVENT = EventFactory.createArrayBacked(PacketCallback.class, listeners -> (packet) -> {
@@ -13,4 +13,3 @@ public interface PacketCallback {
 
     void onPacketReceived(Packet<?> packet);
 }
-

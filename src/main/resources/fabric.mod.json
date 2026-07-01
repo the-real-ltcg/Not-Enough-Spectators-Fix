@@ -1,44 +1,52 @@
 {
-	"schemaVersion": 1,
-	"id": "not-enough-spectators",
-	"version": "${version}",
-	"name": "Not Enough Spectators",
-	"description": "Share your singleplayer and multiplayer gameplay with others by allowing them to spectate your game!",
-	"authors": [
-		"Cheezer"
-	],
-	"contact": {
-		"homepage": "https://github.com/Cheezer1656/NotEnoughSpectators",
-		"sources": "https://github.com/Cheezer1656/NotEnoughSpectators"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/not-enough-spectators/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"cheeezer.notenoughspectators.NotEnoughSpectators"
-		],
-		"client": [
-			"cheeezer.notenoughspectators.NotEnoughSpectatorsClient"
-		],
-        "modmenu": [
-          "cheeezer.notenoughspectators.config.NESModMenu"
-        ]
-	},
-	"mixins": [
-		"not-enough-spectators.mixins.json",
-		{
-			"config": "not-enough-spectators.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"accessWidener" : "not-enough-spectators.accesswidener",
-	"depends": {
-		"fabricloader": ">=0.16.14",
-		"minecraft": "~1.21.8",
-		"java": ">=21",
-		"fabric-api": "*",
-        "cloth-config": ">=19.0.147",
-        "modmenu": ">=15.0.0-0"
-	}
+  "schemaVersion": 1,
+  "id": "not-enough-spectators",
+  "version": "${version}",
+  "name": "Not Enough Spectators",
+  "description": "Share your singleplayer and multiplayer gameplay with others by allowing them to spectate your game!",
+  "authors": [
+    "Cheezer"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Cheezer1656/NotEnoughSpectators",
+    "sources": "https://github.com/Cheezer1656/NotEnoughSpectators"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "assets/not-enough-spectators/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cheeezer.notenoughspectators.NotEnoughSpectators"
+    ],
+    "client": [
+      "cheeezer.notenoughspectators.NotEnoughSpectatorsClient"
+    ],
+    "modmenu": [
+      "cheeezer.notenoughspectators.config.NESModMenu"
+    ]
+  },
+  "mixins": [
+    "not-enough-spectators.mixins.json",
+    {
+      "config": "not-enough-spectators.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "accessWidener": "not-enough-spectators.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": ">=26.2",
+    "java": ">=25",
+    "fabric-api": "*",
+    "cloth-config": ">=19.0.147",
+    "modmenu": ">=15.0.0-0"
+  },
+  "breaks": {
+    "viafabric": "*",
+    "viafabricplus": "*",
+    "viaversion": "*",
+    "viabackwards": "*",
+    "viarewind": "*",
+    "nes-viabridge": "*"
+  }
 }

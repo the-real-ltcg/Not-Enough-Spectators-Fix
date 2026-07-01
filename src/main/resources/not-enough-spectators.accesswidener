@@ -1,8 +1,8 @@
-accessWidener v2 named
+accessWidener v2 official
 
-accessible field net/minecraft/network/handler/DecoderHandler state Lnet/minecraft/network/state/NetworkState;
-accessible field net/minecraft/network/ClientConnection channel Lio/netty/channel/Channel;
-accessible field net/minecraft/network/handler/EncoderHandler state Lnet/minecraft/network/state/NetworkState;
-accessible field net/minecraft/network/packet/s2c/play/GameJoinS2CPacket commonPlayerSpawnInfo Lnet/minecraft/network/packet/s2c/play/CommonPlayerSpawnInfo;
-accessible field net/minecraft/network/packet/s2c/play/CommonPlayerSpawnInfo gameMode Lnet/minecraft/world/GameMode;
-mutable field net/minecraft/network/packet/s2c/play/CommonPlayerSpawnInfo gameMode Lnet/minecraft/world/GameMode;
+accessible field net/minecraft/network/PacketDecoder protocolInfo Lnet/minecraft/network/ProtocolInfo;
+accessible field net/minecraft/network/Connection channel Lio/netty/channel/Channel;
+accessible field net/minecraft/network/PacketEncoder protocolInfo Lnet/minecraft/network/ProtocolInfo;
+accessible field net/minecraft/network/protocol/game/ClientboundLoginPacket commonPlayerSpawnInfo Lnet/minecraft/network/protocol/game/CommonPlayerSpawnInfo;
+accessible field net/minecraft/network/protocol/game/CommonPlayerSpawnInfo gameType Lnet/minecraft/world/level/GameType;
+mutable field net/minecraft/network/protocol/game/CommonPlayerSpawnInfo gameType Lnet/minecraft/world/level/GameType;

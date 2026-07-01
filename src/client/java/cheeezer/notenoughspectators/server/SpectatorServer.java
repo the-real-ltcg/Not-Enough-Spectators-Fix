@@ -10,11 +10,14 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.flow.FlowControlHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import net.minecraft.SharedConstants;
-import net.minecraft.network.ClientConnection;
-import net.minecraft.network.handler.*;
-import net.minecraft.network.state.HandshakeStates;
-import net.minecraft.server.ServerMetadata;
-import net.minecraft.text.Text;
+import net.minecraft.network.Connection;
+import net.minecraft.network.PacketDecoder;
+import net.minecraft.network.UnconfiguredPipelineHandler;
+import net.minecraft.network.Varint21FrameDecoder;
+import net.minecraft.network.Varint21LengthFieldPrepender;
+import net.minecraft.network.protocol.handshake.HandshakeProtocols;
+import net.minecraft.network.protocol.status.ServerStatus;
+import net.minecraft.network.chat.Component;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +30,7 @@ public class SpectatorServer extends Thread {
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
     private ChannelFuture future;
-    final List<ClientConnection> connections = Collections.synchronizedList(Lists.newArrayList());
+    final List<Connection> connections = Collections.synchronizedList(Lists.newArrayList());
 
     public SpectatorServer(int port) {
         this(port, 0);
@@ -40,6 +43,7 @@ public class SpectatorServer extends Thread {
 
     public void setup() throws Exception {
         if (isSetup) throw new IllegalStateException("Server is already set up");
+        SpectatorServerNetworkHandler.resetSpectatorCount();
         bossGroup = new NioEventLoopGroup();
         workerGroup = new NioEventLoopGroup();
         isSetup = true;
@@ -57,11 +61,11 @@ public class SpectatorServer extends Thread {
                             }
 
                             channel.pipeline().addLast("timeout", new ReadTimeoutHandler(30))
-                                    .addLast("splitter", new SplitterHandler(null))
+                                    .addLast("splitter", new Varint21FrameDecoder(null))
                                     .addLast(new FlowControlHandler())
-                                    .addLast("decoder", new DecoderHandler<>(HandshakeStates.C2S))
-                                    .addLast("prepender", new SizePrepender())
-                                    .addLast("outbound_config", new NetworkStateTransitions.OutboundConfigurer())
+                                    .addLast("decoder", new PacketDecoder<>(HandshakeProtocols.SERVERBOUND))
+                                    .addLast("prepender", new Varint21LengthFieldPrepender())
+                                    .addLast("outbound_config", new UnconfiguredPipelineHandler.Outbound())
                                     .addLast("handler", new SpectatorServerNetworkHandler(SpectatorServer.this));
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)
@@ -87,7 +91,7 @@ public class SpectatorServer extends Thread {
         }
     }
 
-    public ServerMetadata getServerMetadata() {
-        return new ServerMetadata(Text.of("A NotEnoughSpectators server"), Optional.empty(), Optional.of(new ServerMetadata.Version(SharedConstants.getGameVersion().name(), SharedConstants.getProtocolVersion())), Optional.empty(), false);
+    public ServerStatus getServerMetadata() {
+        return new ServerStatus(Component.literal("A NotEnoughSpectators server"), Optional.empty(), Optional.of(new ServerStatus.Version(SharedConstants.getCurrentVersion().name(), SharedConstants.getProtocolVersion())), Optional.empty(), false);
     }
 }

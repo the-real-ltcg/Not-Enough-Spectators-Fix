@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a problem with Not Enough Spectators (Fix)
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please check existing issues first. For **cross-version join failures
+        on older clients** (e.g. "Failed to load registries" / "Network Protocol Error"), see the
+        pinned known-issue and the wiki — that is currently an upstream ViaBackwards limitation.
+  - type: input
+    id: mc-version
+    attributes:
+      label: Host Minecraft version
+      placeholder: "26.2"
+    validations:
+      required: true
+  - type: input
+    id: spectator-version
+    attributes:
+      label: Spectator Minecraft version (if a join issue)
+      placeholder: "e.g. 1.21.8, or N/A"
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod version
+      placeholder: "1.2.0"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what actually happened?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Paste the relevant part of `logs/latest.log` (host, and the spectator client if a join issue). Do not paste the whole file.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I am NOT also running ViaFabric / standalone ViaVersion (they conflict with the embedded Via).
+          required: true
+        - label: Fabric API is installed.
+          required: true

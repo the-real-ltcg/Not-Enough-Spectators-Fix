@@ -1,36 +1,36 @@
 package cheeezer.notenoughspectators;
 
 import com.google.common.collect.Queues;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.EntityPosition;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.PositionMoveRotation;
 
 import java.util.Queue;
 import java.util.function.Consumer;
 
 public class PlayerTaskQueue {
-    private static final Queue<Consumer<ClientPlayerEntity>> TASK_QUEUE = Queues.newConcurrentLinkedQueue();
-    private static final Queue<Consumer<EntityPosition>> POSITION_TASK_QUEUE = Queues.newConcurrentLinkedQueue();
+    private static final Queue<Consumer<LocalPlayer>> TASK_QUEUE = Queues.newConcurrentLinkedQueue();
+    private static final Queue<Consumer<PositionMoveRotation>> POSITION_TASK_QUEUE = Queues.newConcurrentLinkedQueue();
 
-    public static void addTask(Consumer<ClientPlayerEntity> task) {
+    public static void addTask(Consumer<LocalPlayer> task) {
         TASK_QUEUE.add(task);
     }
 
-    public static void addPositionTask(Consumer<EntityPosition> task) {
+    public static void addPositionTask(Consumer<PositionMoveRotation> task) {
         POSITION_TASK_QUEUE.add(task);
     }
 
-    public static void processTasks(ClientPlayerEntity player) {
+    public static void processTasks(LocalPlayer player) {
         while (!TASK_QUEUE.isEmpty()) {
-            Consumer<ClientPlayerEntity> task = TASK_QUEUE.poll();
+            Consumer<LocalPlayer> task = TASK_QUEUE.poll();
             if (task != null) {
                 task.accept(player);
             }
         }
     }
 
-    public static void processPositionTasks(EntityPosition position) {
+    public static void processPositionTasks(PositionMoveRotation position) {
         while (!POSITION_TASK_QUEUE.isEmpty()) {
-            Consumer<EntityPosition> task = POSITION_TASK_QUEUE.poll();
+            Consumer<PositionMoveRotation> task = POSITION_TASK_QUEUE.poll();
             if (task != null) {
                 task.accept(position);
             }

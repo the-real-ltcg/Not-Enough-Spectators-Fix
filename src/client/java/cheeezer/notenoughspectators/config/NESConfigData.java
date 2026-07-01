@@ -3,6 +3,7 @@ package cheeezer.notenoughspectators.config;
 import cheeezer.notenoughspectators.NotEnoughSpectators;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = NotEnoughSpectators.MOD_ID)
 public class NESConfigData implements ConfigData {
@@ -11,6 +12,8 @@ public class NESConfigData implements ConfigData {
     int localPort = 25566;
     boolean shouldTunnel = true;
     String boreServerHost = "bore.pub";
+    @ConfigEntry.Gui.Tooltip
+    int maxSpectators = 0;
 
     public boolean shouldAnnounceJoins() {
         return shouldAnnounceJoins;
@@ -30,5 +33,13 @@ public class NESConfigData implements ConfigData {
 
     public String getBoreServerHost() {
         return boreServerHost;
+    }
+
+    public int getMaxSpectators() {
+        return maxSpectators;
+    }
+
+    public void setMaxSpectators(int maxSpectators) {
+        this.maxSpectators = maxSpectators;
     }
 }
