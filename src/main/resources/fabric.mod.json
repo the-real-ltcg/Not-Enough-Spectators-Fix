@@ -5,11 +5,13 @@
   "name": "Not Enough Spectators",
   "description": "Share your singleplayer and multiplayer gameplay with others by allowing them to spectate your game!",
   "authors": [
-    "Cheezer"
+    "Cheezer",
+    "the-real-ltcg"
   ],
   "contact": {
-    "homepage": "https://github.com/Cheezer1656/NotEnoughSpectators",
-    "sources": "https://github.com/Cheezer1656/NotEnoughSpectators"
+    "homepage": "https://modrinth.com/mod/not-enough-spectators-fix",
+    "sources": "https://github.com/the-real-ltcg/Not-Enough-Spectators-Fix",
+    "issues": "https://github.com/the-real-ltcg/Not-Enough-Spectators-Fix/issues"
   },
   "license": "GPL-3.0-only",
   "icon": "assets/not-enough-spectators/icon.png",

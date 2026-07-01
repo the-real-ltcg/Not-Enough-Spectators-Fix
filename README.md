@@ -7,6 +7,18 @@ from other Minecraft versions.
 
 > **Fabric · Minecraft 26.2 · Java 25**
 
+## Downloads
+
+- **[Modrinth](https://modrinth.com/mod/not-enough-spectators-fix)** (recommended)
+- **[GitHub Releases](../../releases)**
+- **[CurseForge](https://www.curseforge.com/minecraft/mc-mods/not-enough-spectators-memory-leak-fix)**
+
+## Companion mod
+
+Prefer two separate mods over the all-in-one embedded build? The cross-version layer is also
+available as a standalone companion — **[NES ViaBridge](https://github.com/the-real-ltcg/NES-ViaBridge)**
+([Modrinth](https://modrinth.com/mod/nes-via-bridge)) — to pair with a *plain* NES build.
+
 ---
 
 ## What this fork adds
