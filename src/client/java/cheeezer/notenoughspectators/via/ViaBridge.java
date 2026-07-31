@@ -8,6 +8,7 @@ import com.viaversion.viaversion.platform.ViaChannelInitializer;
 import com.viaversion.viaversion.platform.ViaDecodeHandler;
 import com.viaversion.viaversion.platform.ViaEncodeHandler;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -83,8 +84,23 @@ public final class ViaBridge {
             // serverSide = false -> backend connection translating the spectator's version to/from 26.2.
             UserConnection user = ViaChannelInitializer.createUserConnection(channel, false);
             String encoderName = pipeline.get("outbound_config") != null ? "outbound_config" : "encoder";
-            pipeline.addBefore(encoderName, ViaEncodeHandler.NAME, new ViaEncodeHandler(user));
-            pipeline.addBefore("decoder", ViaDecodeHandler.NAME, new ViaDecodeHandler(user));
+            // Via's base handlers silently swallow translation failures (only the Bukkit subclasses
+            // print them), which makes a broken conversion look like a plain protocol error on the
+            // client. Subclass them so anything Via throws is actually reported.
+            pipeline.addBefore(encoderName, ViaEncodeHandler.NAME, new ViaEncodeHandler(user) {
+                @Override
+                public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+                    NotEnoughSpectators.LOGGER.error("[NES] Via OUTBOUND translation error (26.2 -> spectator)", cause);
+                    super.exceptionCaught(ctx, cause);
+                }
+            });
+            pipeline.addBefore("decoder", ViaDecodeHandler.NAME, new ViaDecodeHandler(user) {
+                @Override
+                public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+                    NotEnoughSpectators.LOGGER.error("[NES] Via INBOUND translation error (spectator -> 26.2)", cause);
+                    super.exceptionCaught(ctx, cause);
+                }
+            });
 
             ACTIVE.add(user);
             channel.closeFuture().addListener(future -> ACTIVE.remove(user));
